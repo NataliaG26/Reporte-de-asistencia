@@ -51,5 +51,65 @@ public class Shift {
 		return data;
 	}
 	
-
+	public void actualizeStatus() {
+		if(state == FALTA) {
+			int startt = start.getMinute();
+			int finishh = finish.getMinute();
+			int dif = finishh - startt;
+			if(startt > 10 && dif < 45) {
+				state = TARDE;
+			}else if(dif < 45) {
+				state = INCOMPLETO;
+			}else {
+				state = COMPLETO;
+			}
+		}
+	}
+	
+	public String toString() {
+		String data = "";
+		return data;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
+	
+	public LocalTime getFinish() {
+		return finish;
+	}
+	public void setFinish(LocalTime finish) {
+		this.finish = finish;
+	}
+	
+	public LocalTime getStart() {
+		return start;
+	}
+	public void setStart(LocalTime start) {
+		this.start = start;
+	}
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 }
