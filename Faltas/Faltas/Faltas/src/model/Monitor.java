@@ -22,6 +22,51 @@ public class Monitor {
 		this.code = code;
 	}
 	
+	public void assistance(String startt, String finishh, int day) {
+		String[] sTime = startt.split(":");//tiene la hora de inicio 
+		int hourS = Integer.parseInt(sTime[0]);
+		int minS = Integer.parseInt(sTime[1]);
+		String[] fTime = startt.split(":");//tiene la hora de fin
+		int hourF = Integer.parseInt(fTime[0]);
+		int minF = Integer.parseInt(fTime[1]);
+		
+		String sDay = day(day);
+		code = sDay+sTime[0];
+		
+		Shift shift = shifts.get(code);
+		if(shift == null) {
+			shift = shifts.get(sDay+(++hourS));
+			minS = 00;
+		}
+		LocalTime start = LocalTime.of(hourS, minS);
+		LocalTime finish = LocalTime.of(hourF, minF);
+		
+		boolean finished = false;
+		while(!finished) {
+			if(shift == null ) {
+				if(finish.isBefore(start)) {
+					finished = true;
+				}else {
+					//crear hora
+					code = sDay+hourS;
+					//corregir finish, casos 
+					Shift otherShift = new Shift(start, finish, sDay, code);
+				}
+			}else {
+				shift.setStart(start);
+				if(finish.isBefore(shift.getFinish()) || finish.equals(shift.getFinish()) ) {
+					shift.setFinish(finish);
+					shift.actualizeStatus();
+				}
+				start = LocalTime.of(++hourS, 00);
+				code = sDay+hourS;
+				shift = shifts.get(code);
+			}
+		}
+		
+		//
+	}
+	
 	public void newShift(String startt, String day) {
 		String[] sTime = startt.split(":");
 		code = day+sTime[0];
