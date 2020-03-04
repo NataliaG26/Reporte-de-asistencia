@@ -48,6 +48,7 @@ public class Monitor {
 					finished = true;
 				}else {
 					//crear hora
+					newShift(HourS+":"+minS, sDay);
 					code = sDay+hourS;
 					//corregir finish, casos 
 					Shift otherShift = new Shift(start, finish, sDay, code);
